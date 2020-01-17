@@ -11,8 +11,24 @@
   import { getHomeMultidata } from 'network/home'
   export default {
     name: 'Index',
+    data () {
+      return {
+        banners: [],
+        recommend: [],
+        keywords: [],
+        dKeyword: null
+      }
+    },
     components: {
       NavBar
+    },
+    created () {
+      getHomeMultidata().then(res => {
+        this.banners = res.data.banner
+        this.recommend = res.data.recommend
+        this.keywords = res.data.keywords
+        this.dKeyword = res.data.dKeyword
+      })
     }
   }
 </script>
