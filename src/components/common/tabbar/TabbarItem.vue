@@ -25,7 +25,11 @@
     },
     methods: {
       onClick () {
+<<<<<<< HEAD
         this.$router.push(this.link);
+=======
+        this.$router.push(this.link)
+>>>>>>> 0e0824d27e7367c7baf8759bf077d8178be1c0c0
         console.log(this.link)
       }
     },
