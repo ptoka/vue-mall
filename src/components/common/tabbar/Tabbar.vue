@@ -16,6 +16,7 @@
 
 <style scoped>
   #tabbar {
+    background: white;
     display: flex;
     position: fixed;
     left: 0;
