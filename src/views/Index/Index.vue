@@ -4,7 +4,11 @@
       <template v-slot:center>购物街</template>
     </nav-bar>
     <scroll class="content"
-            ref="scroll">
+            ref="scroll"
+            :probe-type="3"
+            :pull-up-load="true"
+            @scroll="contentScroll"
+            @pullingUp="loadMore">
       <home-child-swiper :banners="banners"></home-child-swiper>
       <recommend-view :recommends="recommend"></recommend-view>
       <tab-control ref="tabControl1"
@@ -12,7 +16,8 @@
                    @tabClick="tabClick"></tab-control>
       <goods-list :goods="goodsType"></goods-list>
     </scroll>
-    <back-top @click.native="backClick"></back-top>
+    <back-top @click.native="backClick"
+              v-show="isShowBackTop"></back-top>
   </div>
 </template>
 
@@ -42,6 +47,7 @@
           sell: { 'page': 0, 'list': [] }
         },
         currentType: ["pop", "new", "sell"],
+        isShowBackTop: false,
       }
     },
     components: {
@@ -73,7 +79,7 @@
         getHomeGoods(type, page).then(res => {
           this.goods[type].list.push(...res.data.list);
           this.goods[type].page += 1;
-          console.log(this.goods);
+          this.$refs.scroll.finishPullUp()
         })
       },
       /*事件监听*/
@@ -84,12 +90,18 @@
       },
       backClick () {
         this.$refs.scroll.scrollTo(0, 0)
+      },
+      contentScroll (position) {
+        this.isShowBackTop = -(position.y) > 1000
+      },
+      loadMore () {
+        this.getHomeGoods(this.currentType[this.index])
       }
     },
     computed: {
       goodsType () {
         return this.goods[this.currentType[this.index]].list;
-      }
+      },
     }
   }
 </script>
