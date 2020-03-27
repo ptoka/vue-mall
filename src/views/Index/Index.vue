@@ -32,6 +32,8 @@
   import Scroll from "components/common/scroll/Scroll";
   import BackTop from "components/content/backTop/BackTop";
 
+  import utils from "components/common/utils"
+
   export default {
     name: 'Index',
     data () {
@@ -60,8 +62,14 @@
       this.getHomeGoods("pop");
       this.getHomeGoods("new");
       this.getHomeGoods("sell");
+
+    },
+    mounted () {
+      const refresh = utils.debounce(this.$refs.scroll.refresh, 500)
+
+
       this.$bus.$on('itemImageLoad', () => {
-        this.$refs.scroll.refresh()
+        refresh()
       })
     },
     methods: {
