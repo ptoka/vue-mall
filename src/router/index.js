@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Tabbar from './tabbar'
-
+import Detail from './detail'
 //解决push报错 Uncaught (in promise)
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location, onResolve, onReject) {
@@ -13,7 +13,7 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
 Vue.use(VueRouter)
 
 /// ...扩展运算符
-const routes = [...Tabbar]
+const routes = [...Tabbar, ...Detail]
 
 const router = new VueRouter({
   mode: 'history',
